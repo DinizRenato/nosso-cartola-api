@@ -18,23 +18,23 @@ export class LigasService {
         const liga = this.repository.create(createLiga);
         return await this.repository.save(liga);
     }
+
     async findLigaByLigaId(liga_id: number) {
         return await this.repository.findOne({ where: { liga_id } });
     }
+
     async findLigaBySlug(slug: string) {
-        return await this.repository.findOne({ where: { slug } });
+        return await this.repository.findOne({
+            where: { slug },
+            relations: ['times', 'times.time']
+        });
     }
 
     async findLoggedUserLigas(token: string) {
-
         const response = await this.findLoggedUserLigasCartolaApi(token);
-
         const ligas: CreateLigaDto[] = response.data['ligas'];
-
         return this.insertUserLigas(ligas);
-
     }
-
 
     async insertUserLigas(ligas: CreateLigaDto[]) {
 

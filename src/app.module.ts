@@ -6,17 +6,20 @@ import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
 import { LigasModule } from './ligas/ligas.module';
 import { Liga } from './ligas/liga.entity';
+import { LigasTimesModule } from './ligas-times/ligas-times.module';
+import { LigaTime } from './ligas-times/liga-time.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [User, Liga],
+      entities: [User, Liga, LigaTime],
       synchronize: true,
     }),
     UsersModule,
     LigasModule,
+    LigasTimesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

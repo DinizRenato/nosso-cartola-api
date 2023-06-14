@@ -9,6 +9,7 @@ import { HttpModule } from '@nestjs/axios';
   imports: [
     TypeOrmModule.forFeature([Liga]), HttpModule],
   controllers: [LigasController],
-  providers: [LigasService]
+  providers: [LigasService],
+  exports: [LigasService]
 })
 export class LigasModule { }

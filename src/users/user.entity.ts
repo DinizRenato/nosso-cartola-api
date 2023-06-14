@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { LigaTime } from "src/ligas-times/liga-time.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User {
@@ -75,5 +76,8 @@ export class User {
     lgpd_removido: boolean;
     @Column()
     lgpd_quarentena: boolean;
+
+    @OneToMany(() => LigaTime, liga_times => liga_times.time)
+    ligas_time: LigaTime
 
 }

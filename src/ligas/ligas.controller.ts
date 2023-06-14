@@ -17,6 +17,7 @@ export class LigasController {
         const liga = await this.ligasService.findLigaByLigaId(liga_id);
         return liga;
     }
+
     @Get('/slug/:slug')
     async findLigaBySlug(@Param('slug') slug: string) {
         const liga = await this.ligasService.findLigaBySlug(slug);

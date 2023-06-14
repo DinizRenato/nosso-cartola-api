@@ -1,5 +1,6 @@
+import { LigaTime } from "src/ligas-times/liga-time.entity";
 import { User } from "src/users/user.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('ligas')
 export class Liga {
@@ -98,5 +99,10 @@ export class Liga {
 
     @Column({ default: false })
     atualiza: boolean;
+
+    @OneToMany(() => LigaTime, times => times.liga, {
+        cascade: true
+    })
+    times: LigaTime;
 
 }
