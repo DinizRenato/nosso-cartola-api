@@ -8,7 +8,6 @@ export class UsersController {
 
     @Get()
     async timeLogado(@Headers() headers) {
-        console.log(headers);
         const user = await this.usersService.findLoggedUser(headers['x-glb-token']);
         return user;
     }

@@ -11,7 +11,9 @@ const URL = 'https://api.cartolafc.globo.com';
 @Injectable()
 export class UsersService {
 
-    constructor(@InjectRepository(User) private repository: Repository<User>, private readonly httpService: HttpService) { }
+    constructor(
+        @InjectRepository(User) private repository: Repository<User>,
+        private readonly httpService: HttpService) { }
 
     create(createUser: CreateUserDto) {
         const user = this.repository.create(createUser);
@@ -21,7 +23,6 @@ export class UsersService {
     async findLoggedUser(token: string) {
 
         const response = await this.findLoggedUserCartolaApi(token);
-        console.log(response.data['time'])
         const userResponse: CreateUserDto = response.data['time'];
 
         const user = await this.repository.findOne({ where: { time_id: userResponse.time_id } })
