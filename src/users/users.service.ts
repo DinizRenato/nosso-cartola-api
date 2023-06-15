@@ -21,11 +21,9 @@ export class UsersService {
     }
 
     async findLoggedUser(token: string) {
+        const userResponse = await this.findLoggedUserCartolaApi(token);
 
-        const response = await this.findLoggedUserCartolaApi(token);
-        const userResponse: CreateUserDto = response.data['time'];
-
-        const user = await this.repository.findOne({ where: { time_id: userResponse.time_id } })
+        const user = await this.findByTimeId(userResponse.time_id)
 
         if (!user) {
             const createdUser = this.create(userResponse);
@@ -36,7 +34,10 @@ export class UsersService {
     }
 
     async findByTimeId(time_id: number) {
-        const user = await this.repository.findOne({ where: { time_id } });
+        const user = await this.repository.findOne({
+            where: { time_id },
+            relations: ['ligas', 'ligas.liga']
+        });
 
         if (!user) {
             const response = await this.findUserTimeIdCartolaApi(time_id);
@@ -49,7 +50,10 @@ export class UsersService {
     }
 
     async findByTimeSlug(slug: string) {
-        const user = await this.repository.findOne({ where: { slug } });
+        const user = await this.repository.findOne({
+            where: { slug },
+            relations: ['ligas', 'ligas.liga']
+        });
 
         if (!user) {
             const response = await this.findUserSlugCartolaApi(slug);
@@ -70,11 +74,11 @@ export class UsersService {
         return this.repository.save(user);
     }
 
-    async findLoggedUserCartolaApi(token: string): Promise<AxiosResponse<User>> {
+    async findLoggedUserCartolaApi(token: string): Promise<User> {
         const url = `${URL}/auth/time/info`;
         return await this.httpService.axiosRef.get(url,
             { headers: { 'X-GLB-Token': token } })
-            .then((response) => response)
+            .then((response) => (response.data['time'] as User))
             .catch((e) => {
                 throw new HttpException(e.response.data, e.response.status);
             });
