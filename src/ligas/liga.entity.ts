@@ -1,14 +1,14 @@
 import { LigaTime } from "src/ligas-times/liga-time.entity";
-import { User } from "src/users/user.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity('ligas')
 export class Liga {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+    // @PrimaryGeneratedColumn()
+    // id: number;
 
-    @Column('int', { unique: true })
+    // @Column('int', { unique: true })
+    @PrimaryColumn()
     liga_id: number;
 
     @Column('int', { nullable: true })

@@ -1,11 +1,14 @@
 import { LigaTime } from "src/ligas-times/liga-time.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity('users')
 export class User {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+    // @PrimaryGeneratedColumn()
+    // id: number;
+    // @Column('int', { unique: true })
+    @PrimaryColumn()
+    time_id: number;
     @Column('int')
     temporada_inicial: number;
     @Column()
@@ -48,8 +51,7 @@ export class User {
     facebook_id: string;
     @Column('int')
     tipo_escudo: number;
-    @Column('int', { unique: true })
-    time_id: number;
+
     @Column('int8')
     tipo_adorno: number;
     @Column('int8')

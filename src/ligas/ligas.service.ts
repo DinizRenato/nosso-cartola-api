@@ -41,11 +41,14 @@ export class LigasService {
         const userLigas = [];
 
         for (const liga of ligas) {
-            const ligaExists = await this.findLigaByLigaId(liga.liga_id);
-            if (!ligaExists) {
-                userLigas.push(await this.create(liga));
-            } else {
-                userLigas.push(ligaExists);
+            // só incluir ligas do tipo moderada
+            if (liga.tipo == 'M') {
+                const ligaExists = await this.findLigaByLigaId(liga.liga_id);
+                if (!ligaExists) {
+                    userLigas.push(await this.create(liga));
+                } else {
+                    userLigas.push(ligaExists);
+                }
             }
         }
         return userLigas;
