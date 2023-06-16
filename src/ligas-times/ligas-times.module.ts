@@ -1,12 +1,11 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { LigasService } from './../ligas/ligas.service';
+import { LigasModule } from 'src/ligas/ligas.module';
+import { UsersModule } from 'src/users/users.module';
 import { LigaTime } from './liga-time.entity';
 import { LigasTimesController } from './ligas-times.controller';
 import { LigasTimesService } from './ligas-times.service';
-import { LigasModule } from 'src/ligas/ligas.module';
-import { UsersModule } from 'src/users/users.module';
 
 @Module({
   imports: [

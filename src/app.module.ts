@@ -10,19 +10,22 @@ import { LigasTimesModule } from './ligas-times/ligas-times.module';
 import { LigaTime } from './ligas-times/liga-time.entity';
 import { RodadasModule } from './rodadas/rodadas.module';
 import { Rodada } from './rodadas/rodada.entity';
+import { UsersRodadasModule } from './users-rodadas/users-rodadas.module';
+import { UserRodada } from './users-rodadas/user-rodada.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [User, Liga, LigaTime, Rodada],
+      entities: [User, Liga, LigaTime, Rodada, UserRodada],
       synchronize: true,
     }),
     UsersModule,
     LigasModule,
     LigasTimesModule,
     RodadasModule,
+    UsersRodadasModule,
   ],
   controllers: [AppController],
   providers: [AppService],

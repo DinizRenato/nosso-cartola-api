@@ -1,3 +1,4 @@
+import { UserRodada } from "src/users-rodadas/user-rodada.entity";
 import { LigaTime } from "../ligas-times/liga-time.entity";
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
@@ -82,4 +83,6 @@ export class User {
     @OneToMany(() => LigaTime, ligas => ligas.time)
     ligas: LigaTime
 
+    @OneToMany(() => UserRodada, rodadas => rodadas.time)
+    pontos: UserRodada;
 }

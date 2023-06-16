@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { LessThan, Repository } from 'typeorm';
 import { Rodada } from './rodada.entity';
 
 const URL = 'https://api.cartolafc.globo.com';
@@ -24,6 +24,15 @@ export class RodadasService {
             where: { rodada_id }
         });
         return rodada;
+    }
+
+    async findFinishedRodadas() {
+        const rodadas = await this.repository.find({
+            where: {
+                fim: LessThan(new Date())
+            }
+        })
+        return rodadas;
     }
 
     async findRodadas() {

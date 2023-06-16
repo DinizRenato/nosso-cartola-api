@@ -10,6 +10,7 @@ import { HttpModule } from '@nestjs/axios';
     TypeOrmModule.forFeature([Rodada]),
     HttpModule,],
   controllers: [RodadasController],
-  providers: [RodadasService]
+  providers: [RodadasService],
+  exports: [RodadasService]
 })
 export class RodadasModule { }

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { UserRodada } from "src/users-rodadas/user-rodada.entity";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity('rodadas')
 export class Rodada {
@@ -11,4 +12,6 @@ export class Rodada {
     fim: Date;
     @Column()
     nome_rodada: string;
+    @OneToMany(() => UserRodada, times => times.rodada)
+    times;
 }
