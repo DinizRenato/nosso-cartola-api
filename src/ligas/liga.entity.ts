@@ -4,10 +4,6 @@ import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 @Entity('ligas')
 export class Liga {
 
-    // @PrimaryGeneratedColumn()
-    // id: number;
-
-    // @Column('int', { unique: true })
     @PrimaryColumn()
     liga_id: number;
 

@@ -1,14 +1,13 @@
-import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { LigaTime } from './liga-time.entity';
-import { Repository } from 'typeorm';
 import { HttpService } from '@nestjs/axios';
-import { CreateLigaTimeDto } from './dtos/create-liga-time.dto';
+import { HttpException, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateLigaDto } from 'src/ligas/dtos/create-liga.dto';
+import { LigasService } from 'src/ligas/ligas.service';
 import { CreateUserDto } from 'src/users/dtos/create-user.dto';
 import { UsersService } from 'src/users/users.service';
-import { Liga } from 'src/ligas/liga.entity';
-import { LigasService } from 'src/ligas/ligas.service';
+import { Repository } from 'typeorm';
+import { CreateLigaTimeDto } from './dtos/create-liga-time.dto';
+import { LigaTime } from './liga-time.entity';
 
 const URL = 'https://api.cartolafc.globo.com';
 
