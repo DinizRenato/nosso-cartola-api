@@ -54,6 +54,9 @@ export class LigasService {
         return userLigas;
     }
 
+    async findLigas() {
+        return await this.repository.find();
+    }
 
     async findLoggedUserLigasCartolaApi(token: string) {
         const url = `${URL}/auth/ligas`;

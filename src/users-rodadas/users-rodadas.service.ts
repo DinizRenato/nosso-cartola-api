@@ -1,9 +1,9 @@
 import { HttpService } from '@nestjs/axios';
 import { HttpException, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { RodadasService } from 'src/rodadas/rodadas.service';
 import { UsersService } from 'src/users/users.service';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CreateUserRodadaDto } from './dtos/create-user-rodada.dto';
 import { UserRodada } from './user-rodada.entity';
 
@@ -20,6 +20,7 @@ export class UsersRodadasService {
 
     constructor(
         @InjectRepository(UserRodada) private repository: Repository<UserRodada>,
+        @InjectDataSource() private dataSource: DataSource,
         private readonly httpService: HttpService,
         private readonly usersService: UsersService,
         private readonly rodadasService: RodadasService
@@ -31,7 +32,6 @@ export class UsersRodadasService {
     }
 
     async findUserRodada(time_id: number, rodada_id: number) {
-
         const userRodada = this.repository.findOne({
             where: {
                 time_id,
@@ -93,6 +93,25 @@ export class UsersRodadasService {
 
         return { message: `Updated ${users.length} user(s) and ${total_rodadas} round(s)` }
 
+    }
+
+    async getLigaRodadaScores(liga_id: number, rodada_id: number) {
+
+        const ligaTimesScores = await this.dataSource
+            .createQueryBuilder()
+            .select('user_rodada.rodada_id, user_rodada.time_id, l.liga_id')
+            .addSelect('user_rodada.pontos, user_rodada.patrimonio, user_rodada.pontos_campeonato')
+            .addSelect('ROW_NUMBER() OVER (ORDER by pontos DESC) rnk_pontos')
+            .addSelect('ROW_NUMBER() OVER (ORDER by patrimonio DESC) rnk_patrimonio')
+            .addSelect('ROW_NUMBER() OVER (ORDER by pontos_campeonato DESC) rnk_pontos_campeonato')
+            .from(UserRodada, 'user_rodada')
+            .innerJoin('users', 'u', 'u.time_id = user_rodada.time_id')
+            .innerJoin('ligas_times', 'l', 'l.time_id = u.time_id')
+            .where('l.liga_id = :liga_id', { liga_id })
+            .andWhere('user_rodada.rodada_id = :rodada_id', { rodada_id })
+            .getRawMany();
+
+        return ligaTimesScores;
     }
 
     async findUserScoreByRodadaCartolaApi(time_id: number, rodada_id: number) {

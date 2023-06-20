@@ -1,12 +1,15 @@
 import { Liga } from "../ligas/liga.entity";
 import { User } from "../users/user.entity";
-import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('ligas_times')
 export class LigaTime {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryColumn()
+    liga_id: number;
+
+    @PrimaryColumn()
+    time_id: number;
 
     @ManyToOne(() => Liga, liga => liga.times)
     @JoinColumn({ name: 'liga_id' })

@@ -14,6 +14,7 @@ import { RodadasModule } from 'src/rodadas/rodadas.module';
     UsersModule,
     RodadasModule],
   controllers: [UsersRodadasController],
-  providers: [UsersRodadasService]
+  providers: [UsersRodadasService],
+  exports: [UsersRodadasService]
 })
 export class UsersRodadasModule { }

@@ -62,7 +62,8 @@ export class RodadasService {
 
     async findUserRodadasWithoutScores(user: User) {
 
-        const rodadas = await this.repository.createQueryBuilder('rodada')
+        const rodadas = await this.repository
+            .createQueryBuilder('rodada')
             .leftJoinAndSelect('users_rodadas', 'ur', 'ur.rodada_id = rodada.rodada_id and ur.time_id = :time_id', {
                 time_id: user.time_id
             })

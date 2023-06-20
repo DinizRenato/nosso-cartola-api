@@ -7,7 +7,7 @@ export class LigasTimesController {
     constructor(private ligasTimesService: LigasTimesService) { }
 
     @Get('/:slug')
-    async findLigasTimesBySlug(@Param('slug') slug: string, @Headers() headers) {
+    async findLigaTimesBySlug(@Param('slug') slug: string, @Headers() headers) {
         return this.ligasTimesService.findLigasTimesBySlug(slug, headers['x-glb-token']);
     }
 

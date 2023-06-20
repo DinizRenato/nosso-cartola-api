@@ -42,8 +42,8 @@ export class LigasTimesService {
                 usersExists = await this.userService.create(time);
             }
             let newLigaTime: CreateLigaTimeDto = {
-                liga: ligaExists,
-                time: usersExists,
+                liga_id: ligaExists.liga_id,
+                time_id: usersExists.time_id,
             }
             await this.create(newLigaTime);
         }
