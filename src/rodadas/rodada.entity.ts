@@ -12,6 +12,6 @@ export class Rodada {
     fim: Date;
     @Column()
     nome_rodada: string;
-    @OneToMany(() => UserRodada, times => times.rodada)
+    @OneToMany(() => UserRodada, times => times.rodada_id)
     times;
 }

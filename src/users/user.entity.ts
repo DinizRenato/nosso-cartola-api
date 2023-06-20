@@ -79,10 +79,8 @@ export class User {
     lgpd_removido: boolean;
     @Column()
     lgpd_quarentena: boolean;
-
     @OneToMany(() => LigaTime, ligas => ligas.time)
     ligas: LigaTime
-
     @OneToMany(() => UserRodada, rodadas => rodadas.time)
     pontos: UserRodada;
 }

@@ -1,7 +1,9 @@
 import { HttpService } from '@nestjs/axios';
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LessThan, Repository } from 'typeorm';
+import { UserRodada } from 'src/users-rodadas/user-rodada.entity';
+import { User } from 'src/users/user.entity';
+import { LessThan, Repository, createQueryBuilder } from 'typeorm';
 import { Rodada } from './rodada.entity';
 
 const URL = 'https://api.cartolafc.globo.com';
@@ -55,6 +57,21 @@ export class RodadasService {
         } else {
             return rodadas;
         }
+
+    }
+
+    async findUserRodadasWithoutScores(user: User) {
+
+        const rodadas = await this.repository.createQueryBuilder('rodada')
+            .leftJoinAndSelect('users_rodadas', 'ur', 'ur.rodada_id = rodada.rodada_id and ur.time_id = :time_id', {
+                time_id: user.time_id
+            })
+            .where('rodada.fim < :today', { today: new Date() })
+            .andWhere('ur.rodada_id IS NULL')
+            .orderBy('rodada.rodada_id', 'ASC')
+            .getMany();
+
+        return rodadas;
 
     }
 
