@@ -7,7 +7,7 @@ import { CreateUserDto } from 'src/users/dtos/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { CreateLigaTimeDto } from './dtos/create-liga-time.dto';
-import { LigaTime } from './liga-time.entity';
+import { LigaTime } from './entities/liga-time.entity';
 
 const URL = 'https://api.cartolafc.globo.com';
 

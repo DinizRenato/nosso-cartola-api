@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LigasModule } from 'src/ligas/ligas.module';
 import { UsersModule } from 'src/users/users.module';
-import { LigaTime } from './liga-time.entity';
+import { LigaTime } from './entities/liga-time.entity';
 import { LigasTimesController } from './ligas-times.controller';
 import { LigasTimesService } from './ligas-times.service';
 

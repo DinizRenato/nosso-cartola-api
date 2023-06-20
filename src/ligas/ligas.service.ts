@@ -1,6 +1,6 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Liga } from './liga.entity';
+import { Liga } from './entities/liga.entity';
 import { Repository } from 'typeorm';
 import { HttpService } from '@nestjs/axios';
 import { CreateLigaDto } from './dtos/create-liga.dto';

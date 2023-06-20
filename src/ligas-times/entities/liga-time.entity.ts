@@ -1,5 +1,5 @@
-import { Liga } from "../ligas/liga.entity";
-import { User } from "../users/user.entity";
+import { Liga } from "../../ligas/entities/liga.entity";
+import { User } from "../../users/entities/user.entity";
 import { Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('ligas_times')

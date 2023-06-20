@@ -5,7 +5,7 @@ import { RodadasService } from 'src/rodadas/rodadas.service';
 import { UsersService } from 'src/users/users.service';
 import { DataSource, Repository } from 'typeorm';
 import { CreateUserRodadaDto } from './dtos/create-user-rodada.dto';
-import { UserRodada } from './user-rodada.entity';
+import { UserRodada } from './entities/user-rodada.entity';
 
 const URL = 'https://api.cartolafc.globo.com';
 

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UsersRodadasService } from './../users-rodadas/users-rodadas.service';
-import { LigaRodada } from './liga-rodada.entity';
+import { LigaRodada } from './entities/liga-rodada.entity';
 import { LigasService } from 'src/ligas/ligas.service';
 import { RodadasService } from 'src/rodadas/rodadas.service';
 
@@ -21,7 +21,7 @@ export class LigasRodadasService {
         return await this.repository.save(ligaRodada);
     }
 
-    async updateAllLigasRounds(liga_id: number, rodada_id: number) {
+    async updateAllLigasRounds() {
 
         const ligas = await this.ligaService.findLigas();
 
@@ -31,7 +31,6 @@ export class LigasRodadasService {
 
             for (const rodada of rodadas) {
                 const listLigaRodadaScore = await this.usersRodadaService.getLigaRodadaScores(liga.liga_id, rodada.rodada_id);
-                console.log(listLigaRodadaScore);
                 for (const ligaRodadaScore of listLigaRodadaScore) {
                     await this.create(ligaRodadaScore);
                 }

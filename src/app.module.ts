@@ -2,18 +2,18 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { User } from './users/user.entity';
+import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
 import { LigasModule } from './ligas/ligas.module';
-import { Liga } from './ligas/liga.entity';
+import { Liga } from './ligas/entities/liga.entity';
 import { LigasTimesModule } from './ligas-times/ligas-times.module';
-import { LigaTime } from './ligas-times/liga-time.entity';
+import { LigaTime } from './ligas-times/entities/liga-time.entity';
 import { RodadasModule } from './rodadas/rodadas.module';
-import { Rodada } from './rodadas/rodada.entity';
+import { Rodada } from './rodadas/entities/rodada.entity';
 import { UsersRodadasModule } from './users-rodadas/users-rodadas.module';
-import { UserRodada } from './users-rodadas/user-rodada.entity';
+import { UserRodada } from './users-rodadas/entities/user-rodada.entity';
 import { LigasRodadasModule } from './ligas-rodadas/ligas-rodadas.module';
-import { LigaRodada } from './ligas-rodadas/liga-rodada.entity';
+import { LigaRodada } from './ligas-rodadas/entities/liga-rodada.entity';
 
 @Module({
   imports: [

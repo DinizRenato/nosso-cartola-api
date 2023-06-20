@@ -7,7 +7,6 @@ export class LigasRodadasController {
 
     @Get()
     async updateLigasScores() {
-        await this.ligasRodadasService.updateAllLigasRounds(2449165, 1);
-        return { message: 'update scores' };
+        return await this.ligasRodadasService.updateAllLigasRounds();
     }
 }

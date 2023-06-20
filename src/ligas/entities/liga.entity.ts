@@ -1,4 +1,4 @@
-import { LigaTime } from "../ligas-times/liga-time.entity";
+import { LigaTime } from "../../ligas-times/entities/liga-time.entity";
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity('ligas')

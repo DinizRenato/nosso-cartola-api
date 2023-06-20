@@ -1,4 +1,4 @@
-import { UserRodada } from "src/users-rodadas/user-rodada.entity";
+import { UserRodada } from "src/users-rodadas/entities/user-rodada.entity";
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity('rodadas')

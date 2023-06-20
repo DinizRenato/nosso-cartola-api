@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { LigasController } from './ligas.controller';
 import { LigasService } from './ligas.service';
-import { Liga } from './liga.entity';
+import { Liga } from './entities/liga.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HttpModule } from '@nestjs/axios';
 

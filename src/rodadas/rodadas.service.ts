@@ -1,10 +1,10 @@
 import { HttpService } from '@nestjs/axios';
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRodada } from 'src/users-rodadas/user-rodada.entity';
-import { User } from 'src/users/user.entity';
+import { UserRodada } from 'src/users-rodadas/entities/user-rodada.entity';
+import { User } from 'src/users/entities/user.entity';
 import { LessThan, Repository, createQueryBuilder } from 'typeorm';
-import { Rodada } from './rodada.entity';
+import { Rodada } from './entities/rodada.entity';
 
 const URL = 'https://api.cartolafc.globo.com';
 

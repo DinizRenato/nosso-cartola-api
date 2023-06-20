@@ -1,5 +1,5 @@
-import { Rodada } from "src/rodadas/rodada.entity";
-import { User } from "src/users/user.entity";
+import { Rodada } from "src/rodadas/entities/rodada.entity";
+import { User } from "src/users/entities/user.entity";
 import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 
 @Entity('users_rodadas')

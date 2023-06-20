@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { RodadasController } from './rodadas.controller';
 import { RodadasService } from './rodadas.service';
-import { Rodada } from './rodada.entity';
+import { Rodada } from './entities/rodada.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HttpModule } from '@nestjs/axios';
 

@@ -1,5 +1,5 @@
-import { UserRodada } from "src/users-rodadas/user-rodada.entity";
-import { LigaTime } from "../ligas-times/liga-time.entity";
+import { UserRodada } from "src/users-rodadas/entities/user-rodada.entity";
+import { LigaTime } from "../../ligas-times/entities/liga-time.entity";
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity('users')
