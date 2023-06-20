@@ -11,4 +11,10 @@ export class UsersRodadasController {
         await this.usersRodadaService.insertLoggedUserAllScorePreviousRounds(headers['x-glb-token']);
         return null;
     }
+
+    @Get('/updateUsers')
+    async updateAllUsers() {
+        const message = await this.usersRodadaService.insertAllUserPreviousScores();
+        return message;
+    }
 }

@@ -1,9 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Rodada } from 'src/rodadas/rodada.entity';
 import { RodadasService } from 'src/rodadas/rodadas.service';
-import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { CreateUserRodadaDto } from './dtos/create-user-rodada.dto';
@@ -43,7 +41,6 @@ export class UsersRodadasService {
         return userRodada;
     }
 
-
     async insertLoggedUserAllScorePreviousRounds(token: string) {
         const user = await this.usersService.findLoggedUser(token);
         const rodadas = await this.rodadasService.findUserRodadasWithoutScores(user);
@@ -67,6 +64,34 @@ export class UsersRodadasService {
             }
 
         }
+
+    }
+
+    async insertAllUserPreviousScores() {
+
+        const users = await this.usersService.findAll();
+
+        let total_rodadas: number = 0;
+
+        for (let user of users) {
+
+            const rodadas = await this.rodadasService.findUserRodadasWithoutScores(user);
+            total_rodadas += rodadas.length;
+            for (let rodada of rodadas) {
+                const data = await this.findUserScoreByRodadaCartolaApi(user.time_id, rodada.rodada_id);
+                let { pontos_campeonato, pontos, patrimonio } = data;
+                let userRodada: CreateUserRodadaDto = {
+                    time_id: user.time_id,
+                    rodada_id: rodada.rodada_id,
+                    pontos_campeonato: pontos_campeonato,
+                    pontos: pontos,
+                    patrimonio: patrimonio
+                }
+                await this.create(userRodada);
+            }
+        }
+
+        return { message: `Updated ${users.length} user(s) and ${total_rodadas} round(s)` }
 
     }
 

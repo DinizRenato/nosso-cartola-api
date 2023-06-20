@@ -65,6 +65,11 @@ export class UsersService {
         return user;
     }
 
+    async findAll() {
+        const users = await this.repository.find();
+        return users;
+    }
+
     async update(time_id: number, attrs: Partial<User>) {
         const user = await this.repository.findOne({ where: { time_id } });
         if (!user) {
