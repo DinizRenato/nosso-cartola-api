@@ -1,3 +1,4 @@
+import { User } from "src/users/entities/user.entity";
 import { LigaTime } from "../../ligas-times/entities/liga-time.entity";
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
@@ -96,9 +97,10 @@ export class Liga {
     @Column({ default: false })
     atualiza: boolean;
 
-    @OneToMany(() => LigaTime, times => times.liga, {
-        cascade: true
-    })
-    times: LigaTime;
+    // @OneToMany(() => LigaTime, times => times.liga, {
+    //     cascade: true
+    // })
+    // times: LigaTime;
+    times: User[] = [];
 
 }

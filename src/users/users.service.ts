@@ -1,10 +1,11 @@
 import { HttpService } from '@nestjs/axios';
-import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AxiosResponse } from 'axios';
+import { LigasService } from 'src/ligas/ligas.service';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { User } from './entities/user.entity';
-import { AxiosResponse } from 'axios';
 
 const URL = 'https://api.cartolafc.globo.com';
 
@@ -13,6 +14,8 @@ export class UsersService {
 
     constructor(
         @InjectRepository(User) private repository: Repository<User>,
+        @Inject(forwardRef(() => LigasService))
+        private ligasService: LigasService,
         private readonly httpService: HttpService) { }
 
     create(createUser: CreateUserDto) {
@@ -34,10 +37,11 @@ export class UsersService {
     }
 
     async findByTimeId(time_id: number) {
-        const user = await this.repository.findOne({
+        let user = await this.repository.findOne({
             where: { time_id },
-            relations: ['ligas', 'ligas.liga']
         });
+
+        user.ligas = await this.ligasService.findLigasByUser(time_id);
 
         if (!user) {
             const response = await this.findUserTimeIdCartolaApi(time_id);
@@ -45,7 +49,12 @@ export class UsersService {
             const createdUser = this.create(newUser);
             return createdUser;
         }
+        return user;
+    }
 
+    async findUserByIdWithLigas(time_id: number) {
+        let user = await this.findByTimeId(time_id);
+        user.ligas = await this.ligasService.findLigasByUser(time_id);
         return user;
     }
 
@@ -63,6 +72,15 @@ export class UsersService {
         }
 
         return user;
+    }
+
+    async findUsersByLigaId(liga_id: number) {
+        const users = await this.repository
+            .createQueryBuilder('users')
+            .innerJoinAndSelect('ligas_times', 'lt', 'lt.time_id = users.time_id')
+            .where('lt.liga_id = :liga_id', { liga_id })
+            .getMany();
+        return users;
     }
 
     async findAll() {

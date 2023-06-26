@@ -20,7 +20,7 @@ export class LigasController {
 
     @Get('/slug/:slug')
     async findLigaBySlug(@Param('slug') slug: string) {
-        const liga = await this.ligasService.findLigaBySlug(slug);
+        const liga = await this.ligasService.findLigaBySlugWithTimes(slug);
         return liga;
     }
 }

@@ -1,13 +1,11 @@
 import { UserRodada } from "src/users-rodadas/entities/user-rodada.entity";
 import { LigaTime } from "../../ligas-times/entities/liga-time.entity";
-import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from "typeorm";
+import { Liga } from "src/ligas/entities/liga.entity";
 
 @Entity('users')
 export class User {
 
-    // @PrimaryGeneratedColumn()
-    // id: number;
-    // @Column('int', { unique: true })
     @PrimaryColumn()
     time_id: number;
     @Column('int')
@@ -79,8 +77,11 @@ export class User {
     lgpd_removido: boolean;
     @Column()
     lgpd_quarentena: boolean;
-    @OneToMany(() => LigaTime, ligas => ligas.time)
-    ligas: LigaTime
+    // @OneToMany(() => LigaTime, ligas => ligas.time)
+    // @JoinColumn()
+    // ligas: LigaTime
+    ligas: Liga[] = [];
     @OneToMany(() => UserRodada, rodadas => rodadas.time)
+    @JoinColumn()
     pontos: UserRodada;
 }

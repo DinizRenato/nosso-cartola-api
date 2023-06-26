@@ -1,16 +1,20 @@
-import { HttpException, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Liga } from './entities/liga.entity';
-import { Repository } from 'typeorm';
 import { HttpService } from '@nestjs/axios';
+import { HttpException, Inject, Injectable, forwardRef } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UsersService } from 'src/users/users.service';
+import { Repository } from 'typeorm';
 import { CreateLigaDto } from './dtos/create-liga.dto';
+import { Liga } from './entities/liga.entity';
 
 const URL = 'https://api.cartolafc.globo.com';
 
 @Injectable()
 export class LigasService {
+
     constructor(
         @InjectRepository(Liga) private repository: Repository<Liga>,
+        @Inject(forwardRef(() => UsersService))
+        private usersService: UsersService,
         private readonly httpService: HttpService
     ) { }
 
@@ -23,10 +27,16 @@ export class LigasService {
         return await this.repository.findOne({ where: { liga_id } });
     }
 
+    async findLigaBySlugWithTimes(slug: string) {
+        let liga = await this.findLigaBySlug(slug);
+        liga.times = await this.usersService.findUsersByLigaId(liga.liga_id);
+        return liga;
+    }
+
     async findLigaBySlug(slug: string) {
         return await this.repository.findOne({
             where: { slug },
-            relations: ['times', 'times.time']
+            // relations: ['times', 'times.time']
         });
     }
 
@@ -56,6 +66,15 @@ export class LigasService {
 
     async findLigas() {
         return await this.repository.find();
+    }
+
+    async findLigasByUser(time_id: number): Promise<Liga[]> {
+        const ligas = await this.repository
+            .createQueryBuilder('ligas')
+            .innerJoinAndSelect('ligas_times', 'lt', 'lt.liga_id = ligas.liga_id')
+            .where("lt.time_id = :time_id", { time_id })
+            .getMany();
+        return ligas;
     }
 
     async findLoggedUserLigasCartolaApi(token: string) {
